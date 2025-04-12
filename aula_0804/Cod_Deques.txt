@@ -1,0 +1,225 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "c1043efa-4796-479a-a383-28aaf355916e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Cria um deque com capacidade fixa\n",
+    "def criar_deque(capacidade):\n",
+    "    return {\n",
+    "        \"valores\": [None] * capacidade,  # Lista para armazenar os elementos\n",
+    "        \"capacidade\": capacidade,        # Capacidade máxima do deque\n",
+    "        \"inicio\": -1,                    # Índice do início do deque\n",
+    "        \"final\": 0,                      # Índice do final do deque\n",
+    "    }\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "79521f16-90aa-457f-bc3e-b5d59af3286e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Verifica se o deque está cheio\n",
+    "def deque_cheio(deque):\n",
+    "    return (deque[\"inicio\"] == 0 and deque[\"final\"] == deque[\"capacidade\"] - 1) or \\\n",
+    "           (deque[\"inicio\"] == deque[\"final\"] + 1)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "044f4c5d-d0e5-4a39-83fa-2fc220449f5f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Verifica se o deque está vazio\n",
+    "def deque_vazio(deque):\n",
+    "    return deque[\"inicio\"] == -1\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "20f04b80-f37d-4000-ae82-4c862f4c8511",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Insere um valor no início do deque\n",
+    "def insere_inicio(deque, valor):\n",
+    "    if deque_cheio(deque):\n",
+    "        print(\"O deque está cheio\")\n",
+    "        return\n",
+    "\n",
+    "    if deque_vazio(deque):\n",
+    "        deque[\"inicio\"] = 0\n",
+    "        deque[\"final\"] = 0\n",
+    "    elif deque[\"inicio\"] == 0:\n",
+    "        deque[\"inicio\"] = deque[\"capacidade\"] - 1\n",
+    "    else:\n",
+    "        deque[\"inicio\"] -= 1\n",
+    "\n",
+    "    deque[\"valores\"][deque[\"inicio\"]] = valor\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "c662300c-94ec-4f4e-b244-40346f93463a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Insere um valor no final do deque\n",
+    "def insere_final(deque, valor):\n",
+    "    if deque_cheio(deque):\n",
+    "        print(\"O deque está cheio\")\n",
+    "        return\n",
+    "\n",
+    "    if deque_vazio(deque):\n",
+    "        deque[\"inicio\"] = 0\n",
+    "        deque[\"final\"] = 0\n",
+    "    elif deque[\"final\"] == deque[\"capacidade\"] - 1:\n",
+    "        deque[\"final\"] = 0\n",
+    "    else:\n",
+    "        deque[\"final\"] += 1\n",
+    "\n",
+    "    deque[\"valores\"][deque[\"final\"]] = valor\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "id": "00a660a6-6c13-406e-a27d-4a212a994c94",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Remove o valor do início do deque\n",
+    "def excluir_inicio(deque):\n",
+    "    if deque_vazio(deque):\n",
+    "        print(\"O deque está vazio\")\n",
+    "        return\n",
+    "\n",
+    "    # Apenas um elemento\n",
+    "    if deque[\"inicio\"] == deque[\"final\"]:\n",
+    "        deque[\"inicio\"] = -1\n",
+    "        deque[\"final\"] = -1\n",
+    "    elif deque[\"inicio\"] == deque[\"capacidade\"] - 1:\n",
+    "        deque[\"inicio\"] = 0\n",
+    "    else:\n",
+    "        deque[\"inicio\"] += 1\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "id": "a221ae03-8434-48c9-a676-bbcb23e629cc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Remove o valor do final do deque\n",
+    "def excluir_final(deque):\n",
+    "    if deque_vazio(deque):\n",
+    "        print(\"O deque está vazio\")\n",
+    "        return\n",
+    "\n",
+    "    if deque[\"inicio\"] == deque[\"final\"]:\n",
+    "        deque[\"inicio\"] = -1\n",
+    "        deque[\"final\"] = -1\n",
+    "    elif deque[\"final\"] == 0:\n",
+    "        deque[\"final\"] = deque[\"capacidade\"] - 1\n",
+    "    else:\n",
+    "        deque[\"final\"] -= 1\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "id": "031da116-02cb-4168-af7b-d9006d427c97",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Retorna o valor no início do deque (sem remover)\n",
+    "def get_inicio(deque):\n",
+    "    if deque_vazio(deque):\n",
+    "        print(\"O deque está vazio\")\n",
+    "        return None\n",
+    "    return deque[\"valores\"][deque[\"inicio\"]]\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "id": "9146bc20-03b4-4c54-be61-088e0d5148e3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Retorna o valor no final do deque (sem remover)\n",
+    "def get_final(deque):\n",
+    "    if deque_vazio(deque):\n",
+    "        print(\"O deque está vazio\")\n",
+    "        return None\n",
+    "    return deque[\"valores\"][deque[\"final\"]]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "id": "e5e266a0-f457-481f-b92f-2c7888201f4a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Início: 20\n",
+      "Final: 30\n",
+      "Novo início após exclusão: 10\n",
+      "Novo final após exclusão: 10\n"
+     ]
+    }
+   ],
+   "source": [
+    "deque = criar_deque(5)\n",
+    "\n",
+    "insere_final(deque, 10)\n",
+    "insere_inicio(deque, 20)\n",
+    "insere_final(deque, 30)\n",
+    "\n",
+    "print(\"Início:\", get_inicio(deque))  # Deve exibir 20\n",
+    "print(\"Final:\", get_final(deque))    # Deve exibir 30\n",
+    "\n",
+    "excluir_inicio(deque)\n",
+    "print(\"Novo início após exclusão:\", get_inicio(deque))  # Deve exibir 10\n",
+    "\n",
+    "excluir_final(deque)\n",
+    "print(\"Novo final após exclusão:\", get_final(deque))    # Deve exibir 10\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
